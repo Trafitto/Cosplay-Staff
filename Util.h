@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include <Arduino.h>
 Adafruit_NeoPixel strip;
 
 
@@ -27,24 +28,22 @@ void setAllOff()
 
 /* some effect from Adafruit example*/
 
-
-
-void ShowExample()
-{
-    // Some example procedures showing how to display to the pixels:
-  colorWipe(strip.Color(255, 0, 0), 50); // Red
-  colorWipe(strip.Color(0, 255, 0), 50); // Green
-  colorWipe(strip.Color(0, 0, 255), 50); // Blue
-//colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
-  // Send a theater pixel chase in...
-  theaterChase(strip.Color(127, 127, 127), 50); // White
-  theaterChase(strip.Color(127, 0, 0), 50); // Red
-  theaterChase(strip.Color(0, 0, 127), 50); // Blue
-
-  rainbow(20);
-  rainbowCycle(20);
-  theaterChaseRainbow(50);
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
+
+
 
 // Fill the dots one after the other with a color
 void colorWipe(uint32_t c, uint8_t wait) {
@@ -116,20 +115,7 @@ void theaterChaseRainbow(uint8_t wait) {
   }
 }
 
-// Input a value 0 to 255 to get a color value.
-// The colours are a transition r - g - b - back to r.
-uint32_t Wheel(byte WheelPos) {
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos -= 85;
-    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
-  }
-  WheelPos -= 170;
-  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-}
+
 
 /* end effect from Adafruit*/
 
@@ -151,4 +137,23 @@ void Breath(int leds, float MaximumBrightness,float SpeedFactor,float StepDelay)
       delay(StepDelay);
       
       }
+}
+
+
+
+void ShowExample()
+{
+    // Some example procedures showing how to display to the pixels:
+  colorWipe(strip.Color(255, 0, 0), 50); // Red
+  colorWipe(strip.Color(0, 255, 0), 50); // Green
+  colorWipe(strip.Color(0, 0, 255), 50); // Blue
+//colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
+  // Send a theater pixel chase in...
+  theaterChase(strip.Color(127, 127, 127), 50); // White
+  theaterChase(strip.Color(127, 0, 0), 50); // Red
+  theaterChase(strip.Color(0, 0, 127), 50); // Blue
+
+  rainbow(20);
+  rainbowCycle(20);
+  theaterChaseRainbow(50);
 }

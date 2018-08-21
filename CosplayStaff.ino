@@ -1,9 +1,7 @@
-#include <Adafruit_NeoPixel.h>
-#ifdef __AVR__
-  #include <avr/power.h>
-#endif
+//#include <Adafruit_NeoPixel.h>
 
-#include "util.h"
+
+#include "Util.h"
 #include <Wire.h>
 
     #define D0 16
@@ -17,14 +15,14 @@
 
 
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, D1, NEO_GRB + NEO_KHZ800);
+//Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, D1, NEO_GRB + NEO_KHZ800);
 
 const int MPU=0x68;
 int GyX,GyY,GyZ;
 
 void setup() {
-  strip.begin();
-  strip.show(); // Initialize all pixels to 'off'
+  init(1,D1);
+  setAllOff();
   // Initialize MPU-6050
  /* Wire.begin();
   Wire.beginTransmission(MPU);
@@ -48,8 +46,9 @@ void loop() {
   Serial.print(" | Z = "); Serial.println(GyZ);
   Serial.println(" ");
   delay(333);*/
-  ShowExample();
+  //ShowExample();
 
+Breath(1,255,0.02,0.01);
 }
 
 
