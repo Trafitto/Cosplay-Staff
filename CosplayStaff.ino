@@ -1,7 +1,5 @@
+#include <Eled.h>
 
-
-
-#include "Util.h"
 
     #define D0 16
     #define D1 5 //USE THIS
@@ -13,22 +11,17 @@
     #define D7 13
 
 
+Eled eled(1,D1);
 
-//Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, D1, NEO_GRB + NEO_KHZ800);
 
 
 void setup() {
-  init(1,D1);
-  setAllOff();
 
+  eled.setAllOff();
 }
 
 void loop() {
-
-
-  //ShowExample();
-
-  Breath(1,255,0.02,0.01);
+   eled.BreathBlue(255,0.008,5);
 }
 
 
